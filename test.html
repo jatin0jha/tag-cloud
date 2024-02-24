@@ -9,7 +9,6 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif;
             background-color: #000000;
         }
 
@@ -28,21 +27,10 @@
             transform: translate(-50%, -50%);
         }
 
-        .tag-cloud svg {
-            width: 50px;
-            height: 50px;
-            position: absolute;
-            transform-style: preserve-3d;
-            transform-origin: center center;
-            transition: transform 0.3s;
-        }
-
         .tag-cloud img {
             width: 50px;
             height: 50px;
             position: absolute;
-            transform-style: preserve-3d;
-            transform-origin: center center;
             transition: transform 0.3s;
         }
     </style>
@@ -54,73 +42,54 @@
         <h3 class="attribute-head">Skills</h3>
         <div id="tag-cloud-container">
             <div class="tag-cloud">
-                <img src="asset/arduino.svg" alt="arduino">
-                <img src="asset/azure.svg" alt="azure">
-                <img src="asset/bootstrap.svg" alt="bootstrap">
-                <img src="asset/chrome.svg" alt="chrome">
-                <img src="asset/css.svg" alt="css">
-                <img src="asset/express.svg" alt="express">
-                <img src="asset/figma.svg" alt="figma">
-                <img src="asset/git.svg" alt="git">
-                <img src="asset/github.svg" alt="github">
-                <img src="asset/html.svg" alt="html">
-                <img src="asset/javascript.svg" alt="javascript">
-                <img src="asset/jquery.svg" alt="jquery">
-                <img src="asset/mongo.svg" alt="mongo">
-                <img src="asset/nextjs.svg" alt="nextjs">
-                <img src="asset/nodejs.svg" alt="node">
-                <img src="asset/photoshop.svg" alt="photoshop">
-                <img src="asset/python.svg" alt="python">
-                <img src="asset/react.svg" alt="react">
-                <img src="asset/rpi.svg" alt="pi">
-                <img src="asset/sass.svg" alt="sass">
-                <img src="asset/sql.svg" alt="sql">
-                <img src="asset/typescript.svg" alt="typescript">
-                <img src="asset/vscode.svg" alt="">
-                <!-- Add more <svg> elements with different icons as needed -->
+                <img src="asset/arduino.svg" alt="arduino"><img src="asset/azure.svg" alt="azure"><img
+                    src="asset/bootstrap.svg" alt="bootstrap"><img src="asset/chrome.svg" alt="chrome"><img
+                    src="asset/css.svg" alt="css"><img src="asset/express.svg" alt="express"><img src="asset/figma.svg"
+                    alt="figma"><img src="asset/git.svg" alt="git"><img src="asset/github.svg" alt="github"><img
+                    src="asset/html.svg" alt="html"><img src="asset/javascript.svg" alt="javascript"><img
+                    src="asset/jquery.svg" alt="jquery"><img src="asset/mongo.svg" alt="mongo"><img
+                    src="asset/nextjs.svg" alt="nextjs"><img src="asset/nodejs.svg" alt="node"><img
+                    src="asset/photoshop.svg" alt="photoshop"><img src="asset/python.svg" alt="python"><img
+                    src="asset/react.svg" alt="react"><img src="asset/rpi.svg" alt="pi"><img src="asset/sass.svg"
+                    alt="sass"><img src="asset/sql.svg" alt="sql"><img src="asset/typescript.svg" alt="typescript"><img
+                    src="asset/vscode.svg" alt="">
             </div>
         </div>
-
-        <script>
-            const container = document.getElementById('tag-cloud-container');
-            const cloud = document.querySelector('.tag-cloud');
-            const icons = cloud.querySelectorAll('img');
-            const cloudRadius = 200; // Adjust the radius of the spherical cloud
-
-            let rotateX = 0;
-            let rotateY = 0;
-
-            setInterval(rotateCloud, 10); // Adjust the rotation speed (in milliseconds)
-
-            container.addEventListener('mousemove', handleMouseMove);
-
-            function handleMouseMove(event) {
-                const containerWidth = container.offsetWidth;
-                const containerHeight = container.offsetHeight;
-
-                rotateY = (event.clientX / containerWidth - 0.5) * 100; // Adjust the rotation sensitivity
-                rotateX = (event.clientY / containerHeight - 0.5) * 100; // Adjust the rotation sensitivity
-
-                cloud.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            }
-
-            function rotateCloud() {
-                rotateY += 0.5; // Adjust the rotation speed (in degrees)
-
-                cloud.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            }
-
-            for (let i = 0; i < icons.length; i++) {
-                const phi = Math.acos(-1 + (2 * i) / icons.length);
-                const theta = Math.sqrt(icons.length * Math.PI) * phi;
-                const x = cloudRadius * Math.cos(theta) * Math.sin(phi);
-                const y = cloudRadius * Math.sin(theta) * Math.sin(phi);
-                const z = cloudRadius * Math.cos(phi);
-
-                icons[i].style.transform = `translate3d(${x}px, ${y}px, ${z}px)`;
-            }
-        </script>
     </section>
+
+    <script>
+        const cloud = document.querySelector('.tag-cloud');
+        const icons = cloud.querySelectorAll('img');
+        const cloudRadius = 200;
+        let rotateX = 0;
+        let rotateY = 0;
+
+        setInterval(rotateCloud, 10);
+
+        document.addEventListener('mousemove', handleMouseMove);
+
+        function handleMouseMove(event) {
+            rotateY = (event.clientX / window.innerWidth - 0.5) * 100;
+            rotateX = (event.clientY / window.innerHeight - 0.5) * 100;
+
+            cloud.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        }
+
+        function rotateCloud() {
+            rotateY += 0.5;
+            cloud.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        }
+
+        icons.forEach((icon, i) => {
+            const phi = Math.acos(-1 + (2 * i) / icons.length);
+            const theta = Math.sqrt(icons.length * Math.PI) * phi;
+            const x = cloudRadius * Math.cos(theta) * Math.sin(phi);
+            const y = cloudRadius * Math.sin(theta) * Math.sin(phi);
+            const z = cloudRadius * Math.cos(phi);
+
+            icon.style.transform = `translate3d(${x}px, ${y}px, ${z}px)`;
+        });
+    </script>
 </body>
 
 </html>
